@@ -1,5 +1,6 @@
 import { useState } from "react";
-import logoTargett from "../assets/logo_targett.png";
+import logoTargett from "../assets/logoTargett.jpg";
+import livreur from "../assets/livreur.jpg";
 
 const POWER_AUTOMATE_URL =
   "https://2706d808a2e7e3a09e23d3af397c8a.17.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/8bf6bd2958524142b6a61dfd80e6cb2f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=rgRw1_DE6tKKngC55VCmYpcuI2W_3rV7hSqj-sXkpXc";
@@ -247,7 +248,7 @@ const CSS = `
 
   /* ── SUIVI SECTION ── */
   .t-suivi-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: stretch;
     max-width: 1100px; margin: 0 auto;
   }
 
@@ -272,9 +273,7 @@ const CSS = `
   .t-step-desc  { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
 
   .t-suivi-visual {
-    background: var(--navy);
-    border-radius: 12px; padding: 32px;
-    position: relative; overflow: hidden;
+    border-radius: 12px; position: relative; overflow: hidden; padding: 0;
   }
 
   .t-suivi-visual::before {
@@ -282,7 +281,10 @@ const CSS = `
     position: absolute; bottom: -30px; right: -30px;
     width: 180px; height: 180px;
     background: radial-gradient(circle, rgba(232,93,0,0.18) 0%, transparent 70%);
+    pointer-events: none;
   }
+
+  .t-suivi-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .t-track-label {
     font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.4);
@@ -675,7 +677,10 @@ export default function CourseForm() {
         <div className="t-suivi-inner">
           <div>
             <div className="t-section-eyebrow">Comment ça marche</div>
-            <h2 className="t-section-title">Suivi de votre course</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <h2 className="t-section-title">Suivi de votre course</h2>
+              
+            </div>
             <p className="t-section-sub">De la demande à la livraison, suivez chaque étape en temps réel.</p>
             <div className="t-steps">
               {[
@@ -690,25 +695,14 @@ export default function CourseForm() {
                     <div className="t-step-title">{s.title}</div>
                     <div className="t-step-desc">{s.desc}</div>
                   </div>
+                  
                 </div>
               ))}
             </div>
           </div>
+          
           <div className="t-suivi-visual">
-            <div className="t-track-label">Suivi en temps réel — exemple</div>
-            {[
-              { status: "done",    label: "Demande reçue",        time: "09:14" },
-              { status: "done",    label: "Chauffeur assigné",     time: "09:22" },
-              { status: "current", label: "En cours d'enlèvement", time: "10:05" },
-              { status: "pending", label: "En transit",            time: "—" },
-              { status: "pending", label: "Livraison confirmée",   time: "—" },
-            ].map(t => (
-              <div className="t-track-item" key={t.label}>
-                <div className={`t-track-dot ${t.status}`} />
-                <div className="t-track-text">{t.label}</div>
-                <div className="t-track-time">{t.time}</div>
-              </div>
-            ))}
+            <img src={livreur} alt="Livreur" />
           </div>
         </div>
       </section>
@@ -718,7 +712,7 @@ export default function CourseForm() {
         <div className="t-form-inner">
           <div className="t-section-eyebrow" style={{ marginBottom: 10 }}>Formulaire de demande</div>
           <h2 className="t-section-title">Nouvelle demande de course</h2>
-          <p className="t-section-sub">Remplissez le formulaire ci-dessous. Votre course est créée automatiquement dans notre système Dataverse.</p>
+          <p className="t-section-sub">Remplissez le formulaire ci-dessous.</p>
 
           <div className="t-form-layout">
             {/* Form card */}
@@ -788,7 +782,7 @@ export default function CourseForm() {
                 {status?.type === "success" && (
                   <div className="t-feedback-ok">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                    Course créée avec succès — votre équipe a été notifiée.
+                    Votre demande a été envoyée avec succès
                   </div>
                 )}
                 {status?.type === "error" && (
@@ -866,7 +860,7 @@ export default function CourseForm() {
           <img src={logoTargett} alt="Targett Transport" />
         </div>
         <div className="t-footer-text">
-          © 2026 <strong>Targett Transport & Logistique</strong> · Paris, France · Powered by Microsoft Dataverse
+          © 2026 <strong>Targett Transport & Logistique</strong> · Paris, France · Powered by Askware-Tunisia
         </div>
       </footer>
     </>
